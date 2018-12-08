@@ -1,0 +1,112 @@
+<div class="row">
+  <div class="col-md-12">
+    <card cardTitle="Data Table">
+
+      <div  style="margin-bottom: 40px;    display: -webkit-box;
+      " class="form-group col-md-5">
+        <label style="    margin-right: 15px;
+        margin-top: 5px;" class="control-label">Select Job</label>
+        <select [(ngModel)]="jobTitleCode" name="select" id="select1" class="form-control">
+          <option *ngFor="let job of JobTitle" value="{{job.code}}">{{job.value}}</option>
+         
+        </select>
+        <button style="padding: 8px 20px;
+        " (click)="searchData()" class="btn btn-icon btn-xs btn-primary">
+        <i class="fa fa-search fa-fw"></i>
+      </button>
+
+        </div>
+             <!-- <input [(ngModel)]="searchCeritria" (keyup.enter)="searchData()" type="text" class="search-input" placeholder="Search  · · ·"> -->
+            <!-- <button (click)="searchData()" class="search-btn">
+              <i class="fa fa-search fa-fw"></i>
+            </button> -->
+            <div class="form-group">
+                <label class="control-label"></label>
+
+          </div>
+    
+
+          
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Job Title</th>
+            <th>Country</th>
+            <th>Region</th>
+            <th>Years Of Experience</th>
+            <th> Daily Work Hours</th>
+            <th> Salary</th>
+
+          
+            <th>Other</th>
+
+
+
+
+            <!-- <th>STATE</th> -->
+          </tr>
+        </thead>
+        <tbody>
+
+            <tr *ngIf="dataListSize == 0" >
+                <td  class="text-center no-data" colspan="8">
+                    <i  class="fa fa-database fa-fw"></i>
+                    No Data Avilable
+                </td>
+                
+                </tr>
+                
+          <tr *ngFor="let item of tableData  | paginate: { id: 'pager', itemsPerPage: pageSize, currentPage: pageNumber , totalItems: dataListSize};let index = index">
+              <td>{{index+1}}</td>
+          
+                
+
+                    <td>{{item.jobTitle}}</td>
+
+                      <td>{{item.country}}</td>
+                    <td>{{item.region}}</td>
+                    
+                    <td>{{item.yearsOfExperience}}</td>
+                    <td>{{item.dailyWorkHours}}</td>
+                    <td>{{item.salary}}</td>
+
+      
+                    <td>{{item.other}}</td>
+                   
+              <span class="label label-info">info</span>
+           </tr>
+        </tbody>
+      </table>
+      <form class="pagination-wrapper">
+
+        
+        <div class="form-group pages">
+            <div class="has-text-centered">
+
+            <div *ngIf="loading" class="spinner" ></div>
+            </div>
+          <pagination-controls class="my-pagination" id="pager" (pageChange)="pageChanged($event)" maxSize="9" directionLinks="true"
+             previousLabel="Prev" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+            screenReaderCurrentLabel="You're on page">
+          </pagination-controls>
+        </div>
+
+
+        <div class="form-group options pages">
+          <div class="input-group input-group-sm">
+            <select class="form-control" name="pageChangedName" [(ngModel)]="pageSize" (ngModelChange)="loadData()">
+              <option>1</option>
+              <option>5</option>
+              <option>10</option>
+              <option>20</option>
+              <option>50</option>
+             
+            </select>
+            <span class="input-group-addon addon-right">Per Page</span>
+          </div>
+        </div>
+      </form>
+    </card>
+  </div>
+</div>

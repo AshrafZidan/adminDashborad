@@ -1,0 +1,114 @@
+<div class="row">
+  <div class="col-md-12">
+    <card cardTitle="Data Table">
+
+
+        <div class="search-group">
+            <input [(ngModel)]="searchCeritria" (keyup.enter)="searchData()" type="text" class="search-input" placeholder="Search  · · ·">
+            <button (click)="searchData()" class="search-btn">
+              <i class="fa fa-search fa-fw"></i>
+            </button>
+          </div>
+
+          
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Country</th>
+            <th>Region</th>
+            <th>Activity</th>
+            <th>Capital Currency</th>
+            <th>ID Cardss</th>
+            <th>Authorization Copy</th>
+
+            <th>Rental Agreement Copy</th>
+            <th>Other</th>
+            
+            <th>Creation Date</th>
+            <!-- <th>STATE</th> -->
+          </tr>
+        </thead>
+        <tbody>
+
+            <tr *ngIf="dataListSize == 0" >
+                <td  class="text-center no-data" colspan="10">
+                    <i  class="fa fa-database fa-fw"></i>
+                    No Data Avilable
+                </td>
+                
+                </tr>
+                
+          <tr *ngFor="let item of tableData  | paginate: { id: 'pager', itemsPerPage: pageSize, currentPage: pageNumber , totalItems: dataListSize};let index = index">
+              <td>{{index+1}}</td>
+
+              <td>{{item.country}}</td>
+              <td>{{item.region}}</td>
+              <td>{{item.activity}}</td>
+              <td>{{item.capitalCurrency}}</td>
+              <td>{{item.id}}</td>
+
+
+
+
+              
+              
+              <td>
+                  <a class="url"
+                  
+                  href="http://localhost:8080/Dolphin_Services/adminservices/getformsfiles?filename={{item.authorizationImageName}}&formname=EstablishCompanies"
+
+
+                  target="_blank"> 
+                      <img src="{{ImgSrc}}" alt="avatar">
+                  </a>
+                
+                </td>
+
+                  <td>
+                 <a class="url"  
+                 href="http://localhost:8080/Dolphin_Services/adminservices/getformsfiles?filename={{item.agreementImageName}}&formname=EstablishCompanies"
+
+                 target="_blank">
+                    <img src="{{ImgSrc}}" alt="avatar">   
+                </a></td>
+
+
+              <td>{{item.other }}</td>
+              <td>{{item.creationDate | date : format : timezone }}</td>
+              <span class="label label-info">info</span>
+           </tr>
+        </tbody>
+      </table>
+      <form class="pagination-wrapper">
+
+        
+        <div class="form-group pages">
+            <div class="has-text-centered">
+
+            <div *ngIf="loading" class="spinner" ></div>
+            </div>
+          <pagination-controls class="my-pagination" id="pager" (pageChange)="pageChanged($event)" maxSize="9" directionLinks="true"
+             previousLabel="Prev" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+            screenReaderCurrentLabel="You're on page">
+          </pagination-controls>
+        </div>
+
+
+        <div class="form-group options pages">
+          <div class="input-group input-group-sm">
+            <select class="form-control" name="pageChangedName" [(ngModel)]="pageSize" (ngModelChange)="loadData()">
+              <option>1</option>
+              <option>5</option>
+              <option>10</option>
+              <option>20</option>
+              <option>50</option>
+             
+            </select>
+            <span class="input-group-addon addon-right">Per Page</span>
+          </div>
+        </div>
+      </form>
+    </card>
+  </div>
+</div>
